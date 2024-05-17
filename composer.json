@@ -17,7 +17,7 @@
         {
             "url": "https://github.com/RWRetail/phing.git",
             "type": "git"
-        },
+        }
   ],
   "require": {
     "php": "^7.4|^8.0",
