@@ -21,7 +21,7 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "phing/phing": "^2.17",
+    "phing/phing": "2.17.5",
     "pear/pear-core-minimal": "*",
     "pear/log": "^1.13"
   },
