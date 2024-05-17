@@ -81,6 +81,9 @@ class DebugPDOStatement extends PDOStatement
                     $boundValue = trim($boundValue, "'");
                     $boundValue = $this->pdo->quote($boundValue);
                 }
+                
+                // str replace does no longer accept null, only if it's a string
+                $boundValue = is_null($boundValue) ? 'NULL' : $boundValue;
                 $sql = str_replace($pos, $boundValue, $sql);
             }
         }
@@ -96,7 +99,7 @@ class DebugPDOStatement extends PDOStatement
      *
      * @return boolean
      */
-    public function execute($input_parameters = null)
+    public function execute(?array $input_parameters = null): bool
     {
         $debug = $this->pdo->getDebugSnapshot();
         $return = parent::execute($input_parameters);
@@ -119,7 +122,7 @@ class DebugPDOStatement extends PDOStatement
      *
      * @return boolean
      */
-    public function bindValue($pos, $value, $type = PDO::PARAM_STR)
+    public function bindValue(int|string $pos, mixed $value, int $type = PDO::PARAM_STR): bool
     {
         $debug = $this->pdo->getDebugSnapshot();
         $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
@@ -148,7 +151,7 @@ class DebugPDOStatement extends PDOStatement
      *
      * @return boolean
      */
-    public function bindParam($pos, &$value, $type = PDO::PARAM_STR, $length = 0, $driver_options = null)
+    public function bindParam(int|string $pos, mixed &$value, int $type = PDO::PARAM_STR, int $length = 0, mixed $driver_options = null): bool
     {
         $originalValue = $value;
         $debug = $this->pdo->getDebugSnapshot();
